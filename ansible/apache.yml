@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+
+    - name: install packages
+      apt: 
+        name: apache2 
+        update_cache: yes
+        state: latest
+
+    - name: clone demo template
+      template: 
+        src: index.html.j2 
+        dest: /var/www/index.html
+
+    - name: test if web server returns page 
+      uri: 
+        url: "http://{{ ansible_eth0.ipv4.address }}"
