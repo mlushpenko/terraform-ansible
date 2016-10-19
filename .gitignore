@@ -1,3 +1,5 @@
-# Compiled files
-*.tfstate
-*.tfstate.backup
+demo.pem
+terraform.sublime-project
+terraform.sublime-workspace
+terraform.tfstate.backup
+terraform.tfstate

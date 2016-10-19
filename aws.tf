@@ -43,10 +43,10 @@ resource "aws_instance" "ansible" {
   connection {
     # The default username for our AMI
     user        = "ubuntu"
-    private_key = "Accenture.pem"
+    private_key = "demo.pem"
   }
 
-  key_name = "Accenture"
+  key_name = "demo"
 
   provisioner "remote-exec" {
     inline = [
@@ -66,7 +66,7 @@ resource "aws_instance" "web" {
 
   instance_type = "m1.small"
   ami           = "${lookup(var.aws_amis, var.aws_region)}"
-  key_name      = "Accenture"
+  key_name      = "demo"
 
   # Our Security group to allow HTTP and SSH access
   vpc_security_group_ids = ["${aws_security_group.default.id}"]

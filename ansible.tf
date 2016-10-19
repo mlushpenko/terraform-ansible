@@ -10,7 +10,7 @@ resource "null_resource" "ansible_copy" {
   }
   connection {
   	user        = "ubuntu"
-    private_key = "Accenture.pem"
+    private_key = "demo.pem"
     host				= "${aws_instance.ansible.public_ip}"
   }
 
@@ -20,12 +20,12 @@ resource "null_resource" "ansible_copy" {
 
 resource "null_resource" "ssh_copy" {
 	provisioner "file" {
-    source = "Accenture.pem"
-    destination = "/home/ubuntu/Accenture.pem"
+    source = "demo.pem"
+    destination = "/home/ubuntu/demo.pem"
   }
   connection {
   	user        = "ubuntu"
-    private_key = "Accenture.pem"
+    private_key = "demo.pem"
     host				= "${aws_instance.ansible.public_ip}"
   }
 } 
@@ -38,13 +38,13 @@ resource "null_resource" "ansible_exec" {
 
 	provisioner "remote-exec" {
     inline = [
-      "chmod 400 Accenture.pem",
-	    "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook apache.yml -i inventory --key-file=Accenture.pem",
+      "chmod 400 demo.pem",
+	    "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook apache.yml -i inventory --key-file=demo.pem",
     ]
   }
 	connection {
   	user        = "ubuntu"
-    private_key = "Accenture.pem"
+    private_key = "demo.pem"
     host				= "${aws_instance.ansible.public_ip}"
   }
 
