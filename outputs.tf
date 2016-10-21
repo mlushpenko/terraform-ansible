@@ -1,3 +1,3 @@
 output "elb-link" {
-	value = "${aws_elb.web.dns_name}"
+	value = "${aws_elb.web.dns_name}/index.html"
 }

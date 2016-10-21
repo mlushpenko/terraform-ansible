@@ -22,7 +22,7 @@ resource "aws_elb" "web" {
 
   health_check {
     healthy_threshold = 2
-    unhealthy_threshold = 10
+    unhealthy_threshold = 3
     timeout = 10
     target = "HTTP:80/index.html"
     interval = 30
@@ -43,7 +43,7 @@ resource "aws_instance" "ansible" {
   connection {
     # The default username for our AMI
     user        = "ubuntu"
-    private_key = "demo.pem"
+    private_key = "${file("demo.pem")}"
   }
 
   key_name = "demo"

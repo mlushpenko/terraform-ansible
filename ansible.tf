@@ -10,13 +10,13 @@ resource "null_resource" "ansible_copy" {
   }
   connection {
   	user        = "ubuntu"
-    private_key = "demo.pem"
+    private_key = "${file("demo.pem")}"
     host				= "${aws_instance.ansible.public_ip}"
   }
 
   #depends_on = ["null_resource.ansible_inventory_hosts"]
   depends_on = ["null_resource.ansible_dynamic_inventory"]
-} 
+}
 
 resource "null_resource" "ssh_copy" {
 	provisioner "file" {
@@ -44,7 +44,7 @@ resource "null_resource" "ansible_exec" {
   }
 	connection {
   	user        = "ubuntu"
-    private_key = "demo.pem"
+    private_key = "${file("demo.pem")}"
     host				= "${aws_instance.ansible.public_ip}"
   }
 
