@@ -1,3 +1,17 @@
+resource "null_resource" "ansible_dynamic_inventory" {
+  triggers = {
+    instance_count_changed = "${var.aws_instances_count}" 
+    # for cases when infrastructre malfunctions and has to be reprovisioned
+    elb_was_updated = "${length(aws_elb.web.instances)}" 
+  }
+ 
+  provisioner "local-exec" {
+    command = "grep '\"private_ip\":' terraform.tfstate | grep -P '(?:[0-9]{1,3}\\.){3}[0-9]{1,3}' -o | sed '/${aws_instance.ansible.private_ip}/d' > ansible/inventory"
+  }
+
+  depends_on = ["aws_instance.web"]
+}
+
 resource "null_resource" "ansible_copy" {
   triggers = {
     instance_count_changed = "${var.aws_instances_count}" 
