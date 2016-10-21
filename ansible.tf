@@ -25,14 +25,14 @@ resource "null_resource" "ssh_copy" {
   }
   connection {
   	user        = "ubuntu"
-    private_key = "demo.pem"
+    private_key = "${file("demo.pem")}"
     host				= "${aws_instance.ansible.public_ip}"
   }
-} 
+}
 
 resource "null_resource" "ansible_exec" {
 	triggers = {
-		instance_count_changed = "${var.aws_instances_count}" 
+		instance_count_changed = "${var.aws_instances_count}"
 		elb_was_updated = "${length(aws_elb.web.instances)}"
 	}
 
